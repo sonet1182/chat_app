@@ -87,7 +87,7 @@ export const userLogOut = async (req, res) => {
       res.cookie("jwt", "", {
         maxAge: 0
       });
-      res.status(500).send({ message: "User Logout" });
+      res.status(200).send({ message: "User Logout" });
     } catch (error) {
       console.error(`Error: ${error}`);
       res.status(500).send({ message: error.message });
