@@ -6,6 +6,9 @@ import messageRouter from "./route/messageRoute.js"
 import userRouter from "./route/userRoute.js"
 import cookieParser from "cookie-parser"
 import {app, server} from './socket/socket.js'
+import path from "path"
+
+const __dirname = path.resolve();
 
 dotenv.config();  // configure dotenv to use .env file
 
@@ -15,6 +18,12 @@ app.use(cookieParser());  // use cookie parser to parse cookies
 app.use('/api/auth', authRouter);  // use the authRouter for /api/auth
 app.use('/api/message', messageRouter);  // use the authRouter for /api/message
 app.use('/api/user', userRouter);  // use the authRouter for /api/message
+
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend','dist','index.html'));
+})
 
 app.get("/", (req, res) => {
     res.send("Hello World!");  // send a response to the request
