@@ -11,8 +11,6 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("chatapp")) || null
   );
 
-  console.log('safwan', JSON.parse(localStorage.getItem("chatapp")) || null)
-
   return (
     <AuthContext.Provider value={{ authUser, setAuthUser }}>
       {children}
