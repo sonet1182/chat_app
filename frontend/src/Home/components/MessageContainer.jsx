@@ -22,17 +22,23 @@ function MessageContainer({ onBackUser }) {
   const {socket} = useSocketContext();
 
   useEffect(() => {
-    socket?.on("newMessage",(newMessage)=>{
-      console.log('new message'. newMessage)
-      const sound = new Audio(notify);
-      sound.play();
-      setMessages([...messages, newMessage]);
-    })
-
+    socket?.on("newMessage", (newMessage) => {
+      console.log("new message", newMessage);
+      
+      // Check if the new message belongs to the currently selected conversation
+      if (newMessage.senderId === selectedConversation?._id) {
+        const sound = new Audio(notify);
+        sound.play();
+        
+        setMessages([...messages, newMessage]);
+      }
+    });
+  
     return () => {
       socket?.off("newMessage");
-    }
-  }, [socket, setMessages, messages]);
+    };
+  }, [socket, setMessages, messages, selectedConversation]);
+  
 
   useEffect(() => {
     setTimeout(() => {
